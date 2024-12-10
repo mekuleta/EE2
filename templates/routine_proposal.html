@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Proposal</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body style="background: url('{{ url_for('static', filename='images/knee_graphic.jpg') }}') no-repeat center center fixed; background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/EE_logo_final.jpg') }}" alt="Everywhere Exercise" height="50"></a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('exercise') }}">Exercise Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Routine Proposal</h1>
+        <ul class="list-group">
+            {% for exercise in exercises %}
+            <li class="list-group-item">
+                <h5>{{ exercise.name }}</h5>
+                <p>{{ exercise.directions }}</p>
+                {% if current_user.is_authenticated %}
+                <form method="POST" action="{{ url_for('routine_proposal') }}">
+                    <input type="hidden" name="exercise_id" value="{{ exercise.id }}">
+                    <button type="submit" class="btn btn-success">Completed</button>
+                </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="mt-4">
+            <p>Don’t forget to <a href="{{ url_for('login') }}">log in</a> or <a href="{{ url_for('register') }}">register</a> to add today’s session to your account for an overview and varied suggestions.</p>
+        </div>
+    </div>
+</body>
+</html>
