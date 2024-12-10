@@ -1,0 +1,4 @@
+build-essential
+libpython3-dev
+python3-dev
+libatlas-base-dev
